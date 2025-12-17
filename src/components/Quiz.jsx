@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const quizData = [
   {
     question: "Biến nào sau đây là hợp lệ trong JavaScript?",
@@ -86,13 +88,29 @@ const quizData = [
 
 
 const Quiz = () => {
+    const [optionSelected, setOptionSelected] = useState(""); // react hook
+
+    const handleSelectedOption = (option) => {
+        setOptionSelected(option);  // callback: optionSelected = option
+    };
+
     return (<div>
         <h2>Câu hỏi 1</h2>
         <p className="question">{quizData[0].question}</p>
 
         {quizData[0].options.map((op) => (
-            <button className="option">{op}</button>
+            <button 
+            key={op}
+            className="option"
+            onClick={() => handleSelectedOption(op)}>{op}</button>
         ))}
+
+        <p>Lựa chọn của bạn là: {optionSelected}</p>
+
+        <div className="nav-buttons">
+            <button>Quay lại</button>
+            <button>Kế tiếp</button>
+        </div>
     </div>);
 };
 
