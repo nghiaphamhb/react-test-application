@@ -148,7 +148,7 @@ const Quiz = () => {
 
 
         {
-            optionSelected === quizData[currentQuestion].answer ? 
+            optionSelected ? (optionSelected === quizData[currentQuestion].answer ? 
             (
                 <p className="correct-answer">
                     Câu trả lời của bạn chính xác
@@ -159,9 +159,9 @@ const Quiz = () => {
                 <p className="incorrect-answer">
                     Câu trả lời của bạn sai
                 </p>
-            )
-
-            
+            ))
+            :
+            ("")
         }
 
         <div className="nav-buttons">
