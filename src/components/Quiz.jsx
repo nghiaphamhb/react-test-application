@@ -89,20 +89,26 @@ const quizData = [
 
 const Quiz = () => {
     const [optionSelected, setOptionSelected] = useState(""); // react hook
+    const [userAnswers, setUserAnswers] = useState(Array.from( {length: quizData.length} ));
 
-    const handleSelectedOption = (option) => {
+    const handleSelectedOption = (option, index) => {
         setOptionSelected(option);  // callback: optionSelected = option
+
+        const newUserAnswers = [...userAnswers];
+        newUserAnswers[0] = index;
+        setUserAnswers(newUserAnswers);
+        console.log(newUserAnswers);
     };
 
     return (<div>
         <h2>Câu hỏi 1</h2>
         <p className="question">{quizData[0].question}</p>
 
-        {quizData[0].options.map((op) => (
+        {quizData[0].options.map((op, index) => (
             <button 
             key={op}
             className="option"
-            onClick={() => handleSelectedOption(op)}>{op}</button>
+            onClick={() => handleSelectedOption(op, index)}>{op}</button>
         ))}
 
         <p>Lựa chọn của bạn là: {optionSelected}</p>
