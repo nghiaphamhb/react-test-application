@@ -127,6 +127,11 @@ const Quiz = () => {
       setUserAnswers(Array.from( {length: quizData.length} ));
     };
 
+    const review = () => {
+      setIsQuizEnded(false);
+      setCurrentQuestion(0);
+    };
+
     useEffect(() => {
       // lấy index của answer từ trong array đã lưu 
       const indexAnswer = Number(userAnswers[currentQuestion]);
@@ -150,6 +155,7 @@ const Quiz = () => {
         score={score}
         totalQuestion={quizData.length}
         restart={restart}
+        review={review}
       />;
     }
 
