@@ -95,16 +95,26 @@ const Quiz = () => {
         setOptionSelected(option);  // callback: optionSelected = option
 
         const newUserAnswers = [...userAnswers];
-        newUserAnswers[0] = index;
+        newUserAnswers[currentQuestion] = index;
         setUserAnswers(newUserAnswers);
-        console.log(newUserAnswers);
+        // console.log(newUserAnswers);  // debugger
+    };
+
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+
+    const goBack = () => {
+      if(currentQuestion > 0) setCurrentQuestion((prev) => prev - 1);
+    };
+
+    const goNext = () => {
+      setCurrentQuestion((prev) => prev + 1);
     };
 
     return (<div>
-        <h2>Câu hỏi 1</h2>
-        <p className="question">{quizData[0].question}</p>
+        <h2>Câu hỏi {currentQuestion + 1}</h2>
+        <p className="question">{quizData[currentQuestion].question}</p>
 
-        {quizData[0].options.map((op, index) => (
+        {quizData[currentQuestion].options.map((op, index) => (
             <button 
             key={op}
             className="option"
@@ -114,7 +124,7 @@ const Quiz = () => {
         <p>Lựa chọn của bạn là: {optionSelected}</p>
 
         {
-            optionSelected === quizData[0].answer ? 
+            optionSelected === quizData[currentQuestion].answer ? 
             (
                 <p className="correct-answer">
                     Câu trả lời của bạn chính xác
@@ -131,8 +141,8 @@ const Quiz = () => {
         }
 
         <div className="nav-buttons">
-            <button>Quay lại</button>
-            <button>Kế tiếp</button>
+            <button onClick={goBack}>Quay lại</button>
+            <button onClick={goNext}>Kế tiếp</button>
         </div>
     </div>);
 };
