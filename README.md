@@ -46,4 +46,4 @@ Run this command in the terminal:
 npm run deploy
 ```
 
-We have done it. See the result in the Deployment path!
+We have done it. See the result in the Deployment part!
