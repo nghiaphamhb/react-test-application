@@ -1,16 +1,49 @@
-# React + Vite
+# Project objectives: Build question test app; familiarize yourself with using React, Vite.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Guild to deploy React project to GithubPage
 
-Currently, two official plugins are available:
+## Config the Vite base
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Remember to configure vite base to avoid path errors
 
-## React Compiler
+```javascript
+// vite.config.js
+export default defineConfig({
+  base: "./",
+})
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Build the static files
 
-## Expanding the ESLint configuration
+In the terminal: 
+ 
+```bash
+npm run build
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Now u can see directory /dist. 
+
+### Deploy the static files
+
+In the terminal dowload: 
+
+```bash
+npm i -D gh-pages
+```
+
+Then add to package.json:
+
+```javascript
+// package.json
+"scripts": {
+  "deploy": "gh-pages -d dist -b your_branch_to_deploy_statics"
+}
+```
+
+Run this command in the terminal:
+
+```bash
+npm run deploy
+```
+
+We have done it. See the result in the Deployment path!
