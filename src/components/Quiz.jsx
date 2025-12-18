@@ -103,11 +103,35 @@ const Quiz = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
 
     const goBack = () => {
-      if(currentQuestion > 0) setCurrentQuestion((prev) => prev - 1);
-    };
+      if(currentQuestion > 0){
+        setCurrentQuestion((prev) => prev - 1);
+      };
+      // lấy index của answer từ trong array đã lưu 
+      const indexAnswer = Number(userAnswers[currentQuestion - 1]);
+      // lấy answer đã chọn nếu có 
+      const pastOptionSelected = quizData[currentQuestion - 1].options[indexAnswer];
+
+      if(indexAnswer !== undefined){
+        setOptionSelected(pastOptionSelected);
+      } else {
+        setOptionSelected("");
+      }
+
+      } 
 
     const goNext = () => {
-      setCurrentQuestion((prev) => prev + 1);
+      setCurrentQuestion((prev) => prev + 1); // sau khi ra khỏi hàm goNext: prev' = prev + 1 
+
+      // lấy index của answer từ trong array đã lưu 
+      const indexAnswer = Number(userAnswers[currentQuestion + 1]);
+      // lấy answer đã chọn nếu có 
+      const pastOptionSelected = quizData[currentQuestion + 1].options[indexAnswer];
+
+      if(indexAnswer !== undefined){
+        setOptionSelected(pastOptionSelected);
+      } else {
+        setOptionSelected("");
+      }
     };
 
     return (<div>
@@ -117,11 +141,11 @@ const Quiz = () => {
         {quizData[currentQuestion].options.map((op, index) => (
             <button 
             key={op}
-            className="option"
+            className={`option ${optionSelected === op ? "selected" : "" }`}
+            disabled={!!optionSelected && optionSelected !== op}
             onClick={() => handleSelectedOption(op, index)}>{op}</button>
         ))}
 
-        <p>Lựa chọn của bạn là: {optionSelected}</p>
 
         {
             optionSelected === quizData[currentQuestion].answer ? 
