@@ -156,8 +156,8 @@ const Quiz = () => {
         }
 
         <div className="nav-buttons">
-            <button onClick={goBack}>Quay lại</button>
-            <button onClick={goNext}>Kế tiếp</button>
+            <button onClick={goBack} disabled={currentQuestion === 0}>Quay lại</button>
+            <button onClick={goNext} disabled={!optionSelected}>Kế tiếp</button>
         </div>
     </div>);
 };
