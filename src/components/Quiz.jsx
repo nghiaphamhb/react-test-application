@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Result from './Result';
 
 const quizData = [
   {
@@ -90,6 +91,8 @@ const quizData = [
 const Quiz = () => {
     const [optionSelected, setOptionSelected] = useState(""); // react hook
     const [userAnswers, setUserAnswers] = useState(Array.from( {length: quizData.length} ));
+    const [isQuizEnded, setIsQuizEnded] = useState(false);
+    const [score, setScore] = useState(0);
 
     const handleSelectedOption = (option, index) => {
         setOptionSelected(option);  // callback: optionSelected = option
@@ -109,7 +112,11 @@ const Quiz = () => {
       } 
 
     const goNext = () => {
-      setCurrentQuestion((prev) => prev + 1); // sau khi ra khỏi hàm goNext: prev' = prev + 1 
+      if(currentQuestion === quizData.length - 1){ //if last question
+        setIsQuizEnded(true);
+      } else {
+        setCurrentQuestion((prev) => prev + 1); // sau khi ra khỏi hàm goNext: prev' = prev + 1 
+      }
     };
 
     useEffect(() => {
@@ -123,7 +130,19 @@ const Quiz = () => {
       } else {
         setOptionSelected("");
       }
+
+      if(optionSelected === quizData[currentQuestion].answer){
+        setScore((prev) => prev + 1);
+      }
+
     }, [currentQuestion, userAnswers]);
+
+    if(isQuizEnded){
+      return <Result
+        score={score}
+        totalQuestion={quizData.length}
+      />;
+    }
 
     return (<div>
         <h2>Câu hỏi {currentQuestion + 1}</h2>
@@ -157,7 +176,9 @@ const Quiz = () => {
 
         <div className="nav-buttons">
             <button onClick={goBack} disabled={currentQuestion === 0}>Quay lại</button>
-            <button onClick={goNext} disabled={!optionSelected}>Kế tiếp</button>
+            <button onClick={goNext} disabled={!optionSelected}>
+              {currentQuestion === quizData.length - 1 ? "Hoàn thành quiz" : "Kế tiếp"}
+              </button>
         </div>
     </div>);
 };
