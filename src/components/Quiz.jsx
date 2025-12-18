@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const quizData = [
   {
@@ -106,33 +106,24 @@ const Quiz = () => {
       if(currentQuestion > 0){
         setCurrentQuestion((prev) => prev - 1);
       };
-      // lấy index của answer từ trong array đã lưu 
-      const indexAnswer = Number(userAnswers[currentQuestion - 1]);
-      // lấy answer đã chọn nếu có 
-      const pastOptionSelected = quizData[currentQuestion - 1].options[indexAnswer];
-
-      if(indexAnswer !== undefined){
-        setOptionSelected(pastOptionSelected);
-      } else {
-        setOptionSelected("");
-      }
-
       } 
 
     const goNext = () => {
       setCurrentQuestion((prev) => prev + 1); // sau khi ra khỏi hàm goNext: prev' = prev + 1 
+    };
 
+    useEffect(() => {
       // lấy index của answer từ trong array đã lưu 
-      const indexAnswer = Number(userAnswers[currentQuestion + 1]);
+      const indexAnswer = Number(userAnswers[currentQuestion]);
       // lấy answer đã chọn nếu có 
-      const pastOptionSelected = quizData[currentQuestion + 1].options[indexAnswer];
+      const pastOptionSelected = quizData[currentQuestion].options[indexAnswer];
 
       if(indexAnswer !== undefined){
         setOptionSelected(pastOptionSelected);
       } else {
         setOptionSelected("");
       }
-    };
+    }, [currentQuestion, userAnswers]);
 
     return (<div>
         <h2>Câu hỏi {currentQuestion + 1}</h2>
